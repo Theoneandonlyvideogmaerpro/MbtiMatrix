@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MBTI Strategic Analyzer</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #0f0f0f;
+      color: #00ffcc;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      background-color: #111;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #00ffcc;
+    }
+    header h1 { margin: 0; font-size: 1.5em; }
+    #clock { font-size: 1em; color: #00ffaa; }
+    #container { display: flex; flex: 1; }
+    nav {
+      width: 200px;
+      background-color: #181818;
+      border-right: 2px solid #00ffcc;
+      padding-top: 20px;
+    }
+    nav ul { list-style: none; padding: 0; }
+    nav li {
+      padding: 15px;
+      cursor: pointer;
+      color: #00ffcc;
+    }
+    nav li:hover {
+      background-color: #00ffcc;
+      color: #000;
+    }
+    main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+    aside {
+      width: 300px;
+      background-color: #181818;
+      border-left: 2px solid #00ffcc;
+      padding: 20px;
+    }
+    .screen { display: none; }
+    .active { display: block; }
+    select, button, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      background-color: #222;
+      color: #00ffcc;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+    button {
+      background-color: #00ffcc;
+      color: #000;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background-color: #00ffaa;
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #00ffcc;
+    }
+    #progress {
+      width: 100%;
+      background-color: #333;
+      height: 20px;
+      margin-bottom: 20px;
+    }
+    #bar {
+      height: 100%;
+      width: 0%;
+      background-color: #00ffcc;
+      transition: width 0.5s ease;
+    }
+    footer {
+      background-color: #111;
+      text-align: center;
+      padding: 10px;
+      font-size: 0.8em;
+      color: #888;
+      border-top: 1px solid #333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MBTI Labs™ | Secure Strategic Portal</h1>
+    <div id="clock">Loading time...</div>
+  </header>
+
+  <div id="container">
+    <nav>
+      <ul>
+        <li onclick="showScreen('screen1', 0)"> Dashboard</li>
+        <li onclick="showScreen('screen2', 20)"> Cognitive Stack</li>
+        <li onclick="showScreen('screen3', 40)"> Friendship Style</li>
+        <li onclick="showScreen('screen4', 60)"> Compatibility</li>
+        <li onclick="showScreen('screen5', 80)"> Color Groups</li>
+        <li onclick="showScreen('screen6', 100)">⬇ Download Report</li>
+
+      </ul>
+    </nav>
+
+    <main>
+      <div id="progress"><div id="bar"></div></div>
+
+      <div id="screen1" class="screen active">
+        <h2>Welcome, Analyst_042</h2>
+        <p>Select your MBTI type:</p>
+        <select id="mbti" onchange="updateAll()">
+          <option>INTJ</option><option>INTP</option><option>ENTJ</option><option>ENTP</option>
+          <option>INFJ</option><option>INFP</option><option>ENFJ</option><option>ENFP</option>
+          <option>ISTJ</option><option>ISFJ</option><option>ESTJ</option><option>ESFJ</option>
+          <option>ISTP</option><option>ISFP</option><option>ESTP</option><option>ESFP</option>
+        </select>
+        <p id="daily-quote">Quote of the Day loading...</p>
+      </div>
+
+      <div id="screen2" class="screen">
+        <h2>Cognitive Stack</h2>
+        <p id="stack"></p>
+      </div>
+
+      <div id="screen3" class="screen">
+        <h2>Friendship Style</h2>
+        <p id="friendship"></p>
+      </div>
+
+      <div id="screen4" class="screen">
+        <h2>Compatibility</h2>
+        <p id="compatibility"></p>
+      </div>
+
+      <div id="screen5" class="screen">
+        <h2>Color Groups</h2>
+        <p> <strong>Blue</strong>: Honest, loyal, caring — ISFJ, ESFJ, ESTJ</p>
+        <p> <strong>Yellow</strong>: Cool, chill, vibes — ESTP, ESFP, ISFP, ISTp</p>
+        <p> <strong>Purple</strong>: Strategic, logical, deep thinkers — INTJ, INTP, ENTJ, ENTP</p>
+        <p> <strong>Green</strong>: Calm, practical, observant — INFJ, INFP, ENFJ, ENFP</p>
+      </div>
+
+      <div id="screen6" class="screen">
+        <h2>Download Full Report</h2>
+        <p>⚠️ Spoiler alert: This might not be what you expect...</p>
+        <button onclick="rickroll()">Download Full Report</button>
+      </div>
+
+
+      
+    <aside>
+      <h3>Live Feed</h3>
+      <p id="feed">Initializing neural scan...</p>
+      <h3>MBTI Match Scanner</h3>
+      <p id="match">Best match loading...</p>
+      <h3>User Notes</h3>
+      <textarea placeholder="Record insights here..."></textarea>
+    </aside>
+  </div>
+
+  <footer>
+    © 2025 MBTI Labs™ | All strategic insights are simulated. For entertainment purposes only. | v3.2.1
+  </footer>
+
+  <script>
+    const quotes = [
+      "INTJs love solving puzzles and planning cool stuff.",
+      "There's no such thing as a quiet room with an ENFP in it.",
+      "There's no such thing as a boring ISTP",
+      "ISFJs are perfect... until somebody is mean to somebody they love.",
+      "ENTPs ask great questions and think fast.",
+      "INFPs dream big and feel deeply.",
+      "ESTPs Rule - Shalom Dobony, founder of MBTI Labs.",
+      "ESFPs light up the room with their energy.",
+      "INFJs understand people in a magical way.",
+      "ESTJs keep things organized and get things done.",
+      "ENFJs are great leaders and super kind.",
+      "INTPs love learning and thinking outside the box.",
+      "ISFPs are creative and love peaceful vibes.",
+      "ESFJs ACTUALLLY HAVE A DARK SIDE!.",
+      "ENTJs have a secret quirk: Sarcasm.",
+      "ISTJs remember everything and keep things running smoothly."
+    ];
+
+    const stacks = {
+      INTJ: "Ni → Te → Fi → Se", INTP: "Ti → Ne → Si → Fe", ENTJ: "Te → Ni → Se → Fi", ENTP: "Ne → Ti → Fe → Si",
+      INFJ: "Ni → Fe → Ti → Se", INFP: "Fi → Ne → Si → Te", ENFJ: "Fe → Ni → Se → Ti", ENFP: "Ne → Fi → Te → Si",
+      ISTJ: "Si → Te → Fi → Ne", ISFJ: "Si → Fe → Ti → Ne", ESTJ: "Te → Si → Ne → Fi", ESFJ: "Fe → Si → Ne → Ti",
+      ISTP: "Ti → Se → Ni → Fe", ISFP: "Fi → Se → Ni → Te", ESTP: "Se → Ti → Fe → Ni", ESFP: "Se → Fi → Te → Ni"
+    };
+
+    const friendshipStyles = {
+      INTJ: "Plans secret missions with you and always remembers your favorite snack.",
+      INTP: "Shares weird facts and builds cool stuff with you just for fun.",
+      ENTJ: "Leads the group and makes sure everyone’s having a blast.",
+      ENTP: "Comes up with wild ideas and dares you to try them together.",
+      INFJ: "Listens deeply and writes you thoughtful notes.",
+      INFP: "Draws you pictures and makes up stories about your friendship.",
+      ENFJ: "Checks in on you and helps solve problems like a superhero.",
+      ENFP: "Sends silly messages and makes every hangout feel like a party.",
+      ISTJ: "Always shows up on time and helps you finish your homework.",
+      ISFJ: "Brings you snacks and makes sure you’re okay when you’re quiet.",
+      ESTJ: "Organizes game night and keeps the rules fair for everyone.",
+      ESFJ: "Remembers your birthday and throws surprise celebrations.",
+      ISTP: "Fixes your broken toy and teaches you how to use cool gadgets.",
+      ISFP: "Makes friendship bracelets and shares peaceful moments.",
+      ESTP: "Starts epic adventures and dares you to race them to the finish.",
+      ESFP: "Tells funny stories and makes you laugh until your face hurts."
+    };
+
+    const compatibility = {
+      INTJ: "Best match: ENFP | Challenging match: ESFP",
+      INTP: "Best match: ENFJ | Challenging match: ISFJ",
+      ENTJ: "Best match: INFP | Challenging match: ISFP",
+      ENTP: "Best match: INFJ | Challenging match: ISTJ",
+      INFJ: "Best match: ENTP | Challenging match: ESTP",
+      INFP: "Best match: ENTJ | Challenging match: ESTJ",
+      ENFJ: "Best match: INTP | Challenging match: ISTP",
+      ENFP: "Best match: INTJ | Challenging match: ISFJ",
+      ISTJ: "Best match: ESFP | Challenging match: ENTP",
+      ISFJ: "Best match: ESTP | Challenging match: ENFP",
+      ESTJ: "Best match: INFP | Challenging match: ISFP",
+      ESFJ: "Best match: ISTP | Challenging match: INTP",
+      ISTP: "Best match: ESFJ | Challenging match: ENFJ",
+      ISFP: "Best match: ENTJ | Challenging match: ESTJ",
+      ESTP: "Best match: ISFJ | Challenging match: INFJ",
+      ESFP: "Best match: INTJ | Challenging match: INTP"
+    };
+
+    function getType() {
+      return document.getElementById("mbti").value;
+    }
+
+    function updateAll() {
+      const type = getType();
+      document.getElementById("stack").textContent = `${type} Cognitive Stack: ${stacks[type]}`;
+      document.getElementById("friendship").textContent = `Friendship Style: ${friendshipStyles[type]}`;
+      document.getElementById("compatibility").textContent = `Friendship Compatibility: ${compatibility[type]}`;
+      document.getElementById("match").textContent = `Best match: ${compatibility[type].split('|')[0].replace('Best match: ', '')}`;
+    }
+
+    function showScreen(id, progress) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.getElementById("bar").style.width = progress + "%";
+      updateAll();
+    }
+
+    function rickroll() {
+      alert("Exporting full PDF report... please wait.");
+      window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
+    }
+
+    function updateClock() {
+      const now = new Date();
+      document.getElementById("clock").textContent = now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+
+    const logs = [
+      "Analyzing neural pathways...",
+      "Cross-referencing MBTI database...",
+      "Mapping cognitive stack...",
+      "Generating friendship profile...",
+      "Finalizing compatibility matrix..."
+    ];
+    let logIndex = 0;
+    setInterval(() => {
+      document.getElementById("feed").textContent = logs[logIndex];
+      logIndex = (logIndex + 1) % logs.length;
+    }, 3000);
+
+    function showDailyQuote() {
+      const today = new Date();
+      const index = today.getDate() % quotes.length;
+      const quote = quotes[index];
+      document.getElementById("daily-quote").textContent = `Quote of the Day: “${quote}”`;
+    }
+
+    showDailyQuote();
+    updateAll();
+    const fakeErrors = [
+  "[ERROR 42] Emotional overload detected.",
+  "[WARNING] Cognitive stack misalignment. Recalibrating...",
+  "[SYSTEM ALERT] Friendship matrix breach. ENTP vs ISTJ conflict logged.",
+  "[FAILURE] Sentiment sync failed. Diplomats too dreamy.",
+  "[GLITCH] Type signature scrambled. Analyst identity unclear.",
+  "[ERROR] Neural scan interrupted. ESTP energy spike detected.",
+  "[CRITICAL] Compatibility engine overheated. Too much ENFP.",
+  "[RETRY] Stack trace incomplete. Missing Ni node.",
+  "[ACCESS DENIED] Vault override blocked by sibling firewall.",
+  "[SYSTEM REBOOT] MBTI core integrity compromised. Restoring backup...",
+  "[404] Personality not found. Please select a valid type.",
+  "[DECRYPTION FAILED] Logs corrupted by sarcasm.",
+  "[LOOP DETECTED] ENTP idea spiral initiated. Exit impossible.",
+  "[BLACKOUT] Strategic override triggered. All types offline.",
+  "[MEMORY LEAK] INFJ empathy overflow. Containment required.",
+   "[WARNING] Excessive fun detected. ESTP protocols engaged.",
+  "[ERROR] Logical paradox encountered. INTP thought loop initiated.",
+  "[ALERT] Emotional resonance spike. ISFP vibes overwhelming.",
+  "[SYSTEM FAILURE] ENFJ leadership conflict. Reassigning roles.",
+  "[DEBUG] ESFJ social algorithm malfunction. Rebooting friendship module.",
+  "[NOTICE] ISTJ order disruption. Chaos levels rising.",
+  "[CRITICAL] ENTJ dominance override. Team dynamics unstable.",
+  "[WARNING] Excessive fun detected. ESTP protocols engaged.",
+  "[SYSTEM NOTE] ISTP detected. Tools missing. Will improvise with duct tape and a spoon.",
+  "[ERROR] ISTP tried to fix the glitch. Now it’s faster, cooler, and slightly illegal.",
+  "[WARNING] ISTP activated. Expect silence, precision, and a sudden motorcycle escape.",
+  "[FAILURE] ISTP refused to read the manual. Somehow still fixed it.",
+  "[GLITCH] ISTP modified the dashboard. It now runs on caffeine and spite.",
+  "[SYSTEM TIRED] ISTP asked for quiet. Dashboard complied by deleting all sound files.",
+  "[ERROR] ISTP built a better version of this system in their garage. It works flawlessly.",
+  "[NOTE] ISTP doesn’t care about your feelings. But they’ll fix your broken code anyway.",
+  "[REBOOT] ISTP pressed one button. Everything works now. No explanation given.",
+  "[ACCESS DENIED] ISTP bypassed security using a paperclip."
+];
+
+function injectFakeError() {
+  const feed = document.getElementById("feed");
+  const error = fakeErrors[Math.floor(Math.random() * fakeErrors.length)];
+  feed.textContent = error;
+}
+setInterval(injectFakeError, 10000);
+
+  </script>
