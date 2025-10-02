@@ -96,7 +96,7 @@
       border-top: 1px solid #333;
     }
   </style>
-</head>
+</head> 
 <body>
   <header>
     <h1>MBTI Labs™ | Secure Strategic Portal</h1>
@@ -111,7 +111,7 @@
         <li onclick="showScreen('screen3', 40)"> Friendship Style</li>
         <li onclick="showScreen('screen4', 60)"> Compatibility</li>
         <li onclick="showScreen('screen5', 80)"> Color Groups</li>
-        <li onclick="showScreen('screen6', 100)">⬇ Download Report</li>
+        <li onclick="showScreen('screen6', 100)">⬇ Download Report]</li>
 
       </ul>
     </nav>
@@ -148,10 +148,10 @@
 
       <div id="screen5" class="screen">
         <h2>Color Groups</h2>
-        <p> <strong>Blue</strong>: Honest, loyal, caring — ISFJ, ESFJ, ESTJ</p>
-        <p> <strong>Yellow</strong>: Cool, chill, vibes — ESTP, ESFP, ISFP, ISTp</p>
-        <p> <strong>Purple</strong>: Strategic, logical, deep thinkers — INTJ, INTP, ENTJ, ENTP</p>
-        <p> <strong>Green</strong>: Calm, practical, observant — INFJ, INFP, ENFJ, ENFP</p>
+        <p> <strong>Blue</strong>: Honest, loyal, caring — ISFJ, ESFJ, ESTJ, ISTJ</p>  
+        <p> <strong>Orange</strong>: Cool, chill, vibes — ESTP, ESFP, ISFP, ISTP</p> 
+        <p> <strong>Purple</strong>: Strategic, logical, deep thinkers — INTJ, INTP, ENTJ, ENTP</p> 
+        <p> <strong>Green</strong>: Calm, practical, observant — INFJ, INFP, ENFJ, ENFP</p> 
       </div>
 
       <div id="screen6" class="screen">
@@ -177,6 +177,33 @@
   </footer>
 
   <script>
+const mbtiGroupColors = {
+  // Analysts (NT) - Blue
+  INTJ: "#00BFFF", INTP: "#00BFFF", ENTJ: "#00BFFF", ENTP: "#00BFFF",
+  // Diplomats (NF) - Green
+  INFJ: "#00FF41", INFP: "#00FF41", ENFJ: "#00FF41", ENFP: "#00FF41",
+  // Sentinels (SJ) - Orange
+  ISTJ: "#FF5F1F", ISFJ: "#FF5F1F", ESTJ: "#FF5F1F", ESFJ: "#FF5F1F",
+  // Explorers (SP) - Purple
+  ISTP: "#8A2BE2", ISFP: "#8A2BE2", ESTP: "#8A2BE2", ESFP: "#8A2BE2"
+};
+
+function colorizeMBTI(text) {
+  return text.replace(/\b[A-Z]{4}\b/g, match => {
+    const color = mbtiGroupColors[match];
+    return color ? `<span style="color:${color}">${match}</span>` : match;
+  });
+}
+
+function updateAll() {
+  const type = getType();
+  document.getElementById("stack").innerHTML = colorizeMBTI(`${type} Cognitive Stack: ${stacks[type]}`);
+  document.getElementById("friendship").innerHTML = colorizeMBTI(`Friendship Style: ${friendshipStyles[type]}`);
+  document.getElementById("compatibility").innerHTML = colorizeMBTI(`Friendship Compatibility: ${compatibility[type]}`);
+  document.getElementById("match").innerHTML = colorizeMBTI(`Best match: ${compatibility[type].split('|')[0].replace('Best match: ', '')}`);
+}
+
+
     const quotes = [
       "INTJs love solving puzzles and planning cool stuff.",
       "There's no such thing as a quiet room with an ENFP in it.",
@@ -204,41 +231,41 @@
     };
 
     const friendshipStyles = {
-      INTJ: "Plans secret missions with you and always remembers your favorite snack.",
-      INTP: "Shares weird facts and builds cool stuff with you just for fun.",
-      ENTJ: "Leads the group and makes sure everyone’s having a blast.",
-      ENTP: "Comes up with wild ideas and dares you to try them together.",
-      INFJ: "Listens deeply and writes you thoughtful notes.",
-      INFP: "Draws you pictures and makes up stories about your friendship.",
-      ENFJ: "Checks in on you and helps solve problems like a superhero.",
-      ENFP: "Sends silly messages and makes every hangout feel like a party.",
-      ISTJ: "Always shows up on time and helps you finish your homework.",
-      ISFJ: "Brings you snacks and makes sure you’re okay when you’re quiet.",
-      ESTJ: "Organizes game night and keeps the rules fair for everyone.",
-      ESFJ: "Remembers your birthday and throws surprise celebrations.",
-      ISTP: "Fixes your broken toy and teaches you how to use cool gadgets.",
-      ISFP: "Makes friendship bracelets and shares peaceful moments.",
-      ESTP: "Starts epic adventures and dares you to race them to the finish.",
-      ESFP: "Tells funny stories and makes you laugh until your face hurts."
+      INTJ: "Plans secret missions with you and always remembers your favorite snack!",
+      INTP: "Shares weird facts and builds cool stuff with you just for fun. Nevr met one, but if they're anyhting like the stereotype, they sound fun!",
+      ENTJ: "Leads the group and makes sure everyone’s having a blast. I have an ENTJ brother and I form firsthand expirience how fun and aweosme they are!",
+      ENTP: "Comes up with wild ideas and dares you to try them together. I only know one ENTP,a but not too well, but from what IO hear, they sound pretty fun!",
+      INFJ: "Listens deeply and writes you thoughtful notes. My loyal ride-or-die... Not like I have one, but if I did, they would be my ride-or-die!",
+      INFP: "Draws you pictures and makes up stories about your friendship. Okay, now this type is an interesting one. They're supposed to be dreamy and creative, but if it means throwing all logic to the wind, I'm in!",
+      ENFJ: "Checks in on you and helps solve problems like a superhero. This type, the protagonist, seems like a peetty okay type. They sound like a good friend to have!",
+      ENFP: "Sends silly messages and makes every hangout feel like a party.They can be a bit much, but hey, life’s too short to be boring!",
+      ISTJ: "Always shows up on time and helps you finish your homework. If they're really anything like the stereotype, they sound like a pretty reliable friend to have!",
+      ISFJ: "Brings you snacks and makes sure you’re okay when you’re quiet.My ISFJ sister is the best! She’s always looking out for me and making sure I’m okay. When she's not scolding me for having a messy room.",
+      ESTJ: "Organizes game night and keeps the rules fair for everyone.Until they feel like breaking the rules themselves, then watch out!",
+      ESFJ: "Remembers your birthday and throws surprise celebrations.These are bacically the awesome party planners of the world. I mean, who doesn't love a good surprise party?  ",
+      ISTP: "Fixes your broken toy and teaches you how to use cool gadgets. My ISTP brother doesn't always live up to the steryotype, but who can? If they do, they sound like a pretty fun friend to have!",
+      ISFP: "Makes friendship bracelets and shares peaceful moments. Boring? Nah, they just have a chill vibe. Plus, they’re great at finding cool spots to hang out.",
+      ESTP: "Starts epic adventures and dares you to race them to the finish. Now that's me. I love a good adventure and a bit of friendly competition. Life’s too short to sit around! The ESTPs are the ultimate awesome fun friends to have! My second-best- friend is one, and together, we vibe!",
+      ESFP: "Tells funny stories and makes you laugh until your face hurts. ESFPs are the life of the party! They know how to have a good time and make sure everyone else is having one too. If you need a laugh, they’re your go-to friend!"
     };
 
     const compatibility = {
-      INTJ: "Best match: ENFP | Challenging match: ESFP",
-      INTP: "Best match: ENFJ | Challenging match: ISFJ",
-      ENTJ: "Best match: INFP | Challenging match: ISFP",
-      ENTP: "Best match: INFJ | Challenging match: ISTJ",
-      INFJ: "Best match: ENTP | Challenging match: ESTP",
-      INFP: "Best match: ENTJ | Challenging match: ESTJ",
-      ENFJ: "Best match: INTP | Challenging match: ISTP",
-      ENFP: "Best match: INTJ | Challenging match: ISFJ",
-      ISTJ: "Best match: ESFP | Challenging match: ENTP",
-      ISFJ: "Best match: ESTP | Challenging match: ENFP",
-      ESTJ: "Best match: INFP | Challenging match: ISFP",
-      ESFJ: "Best match: ISTP | Challenging match: INTP",
-      ISTP: "Best match: ESFJ | Challenging match: ENFJ",
-      ISFP: "Best match: ENTJ | Challenging match: ESTJ",
-      ESTP: "Best match: ISFJ | Challenging match: INFJ",
-      ESFP: "Best match: INTJ | Challenging match: INTP"
+      INTJ: "Best match: ENFP | Challenging match: ESFP. If you’re an INTJ, your best friendship match is an ENFP. They bring out your fun side and help you see the world in a new light. Just watch out for ESFPs—they might be a bit too spontaneous for your liking!",
+      INTP: "Best match: ENFJ | Challenging match: ISFJ. If you’re an INTP, your best friendship match is an ENFJ. They help you come out of your shell and enjoy the moment. Just be careful with ISFJs—they might not get your need for alone time.",
+      ENTJ: "Best match: INFP | Challenging match: ISFP. If you’re an ENTJ, your best friendship match is an INFP. They balance your drive with their empathy and creativity. Just be cautious with ISFPs—they might find your intensity overwhelming.",
+      ENTP: "Best match: INFJ | Challenging match: ISTJ. If you’re an ENTP, your best friendship match is an INFJ. They help ground your ideas and provide deep insights. Just watch out for ISTJs—they might find your spontaneity a bit too much to handle!",
+      INFJ: "Best match: ENTP | Challenging match: ESTP. If you’re an INFJ, your best friendship match is an ENTP. They challenge your perspectives and bring excitement to your life. Just be careful with ESTPs—they might clash with your need for depth and meaning.",
+      INFP: "Best match: ENTJ | Challenging match: ESTJ. If you’re an INFP, your best friendship match is an ENTJ. They help you take action on your dreams and provide structure. Just be cautious with ESTJs—they might not understand your idealism.",
+      ENFJ: "Best match: INTP | Challenging match: ISTP .If you’re an ENFJ, your best friendship match is an INTP. They bring fresh ideas and a different perspective to your life. Just watch out for ISTPs—they might find your emotional intensity a bit overwhelming!",
+      ENFP: "Best match: INTJ | Challenging match: ISFJ. If you’re an ENFP, your best friendship match is an INTJ. They help you focus your energy and provide strategic insights. Just be careful with ISFJs—they might not appreciate your need for spontaneity.",
+      ISTJ: "Best match: ESFP | Challenging match: ENTP. If you’re an ISTJ, your best friendship match is an ESFP. They bring fun and excitement to your structured life. Just be cautious with ENTPs—they might challenge your need for order and routine.",
+      ISFJ: "Best match: ESTP | Challenging match: ENFP. If you’re an ISFJ, your best friendship match is an ESTP. They help you break out of your comfort zone and try new things. Just watch out for ENFPs—they might overwhelm your need for stability and predictability.",
+      ESTJ: "Best match: INFP | Challenging match: ISFP. If you’re an ESTJ, your best friendship match is an INFP. They bring creativity and emotional depth to your practical life. Just be careful with ISFPs—they might find your directness a bit too much to handle.",
+      ESFJ: "Best match: ISTP | Challenging match: INTP. If you’re an ESFJ, your best friendship match is an ISTP. They help you relax and enjoy the moment. Just be cautious with INTPs—they might not understand your need for social connection.",
+      ISTP: "Best match: ESFJ | Challenging match: ENFJ. If you’re an ISTP, your best friendship match is an ESFJ. They bring warmth and social fun to your independent life. Just watch out for ENFJs—they might find your need for solitude a bit challenging.",
+      ISFP: "Best match: ENTJ | Challenging match: ESTJ. If you’re an ISFP, your best friendship match is an ENTJ. They help you take action on your creative ideas and provide structure. Just be careful with ESTJs—they might not appreciate your need for freedom and spontaneity.",
+      ESTP: "Best match: ISFJ | Challenging match: INFJ. As this is my type, I'll just note that I gt along with all the types pretty well, but if I had to pick, I'd say my best friendship match is an ISFJ. They help me slow down and appreciate the little things in life. Just be cautious with INFJs—they might find ESTPs' high energy a bit overwhelming. But I'm guessing they'd be awesome therapists.",
+      ESFP: "Best match: INTJ | Challenging match: INTP. If you’re an ESFP, your best friendship match is an INTJ. They bring depth and strategic thinking to your fun-loving life. Just watch out for INTPs—they might not understand your need for social interaction."
     };
 
     function getType() {
@@ -269,7 +296,7 @@
       const now = new Date();
       document.getElementById("clock").textContent = now.toLocaleTimeString();
     }
-    setInterval(updateClock, 1000);
+    setInterval(updateClock, 4000);
 
     const logs = [
       "Analyzing neural pathways...",
@@ -282,7 +309,7 @@
     setInterval(() => {
       document.getElementById("feed").textContent = logs[logIndex];
       logIndex = (logIndex + 1) % logs.length;
-    }, 3000);
+    }, 5000);
 
     function showDailyQuote() {
       const today = new Date();
@@ -293,7 +320,7 @@
 
     showDailyQuote();
     updateAll();
-    const fakeErrors = [
+const fakeErrors = [
   "[ERROR 42] Emotional overload detected.",
   "[WARNING] Cognitive stack misalignment. Recalibrating...",
   "[SYSTEM ALERT] Friendship matrix breach. ENTP vs ISTJ conflict logged.",
@@ -304,19 +331,18 @@
   "[RETRY] Stack trace incomplete. Missing Ni node.",
   "[ACCESS DENIED] Vault override blocked by sibling firewall.",
   "[SYSTEM REBOOT] MBTI core integrity compromised. Restoring backup...",
-  "[404] Personality not found. Please select a valid type.",
+  "[404] Personality not found.",
   "[DECRYPTION FAILED] Logs corrupted by sarcasm.",
   "[LOOP DETECTED] ENTP idea spiral initiated. Exit impossible.",
   "[BLACKOUT] Strategic override triggered. All types offline.",
   "[MEMORY LEAK] INFJ empathy overflow. Containment required.",
-   "[WARNING] Excessive fun detected. ESTP protocols engaged.",
+  "[WARNING] Excessive fun detected. ESTP protocols engaged.",
   "[ERROR] Logical paradox encountered. INTP thought loop initiated.",
   "[ALERT] Emotional resonance spike. ISFP vibes overwhelming.",
   "[SYSTEM FAILURE] ENFJ leadership conflict. Reassigning roles.",
   "[DEBUG] ESFJ social algorithm malfunction. Rebooting friendship module.",
   "[NOTICE] ISTJ order disruption. Chaos levels rising.",
   "[CRITICAL] ENTJ dominance override. Team dynamics unstable.",
-  "[WARNING] Excessive fun detected. ESTP protocols engaged.",
   "[SYSTEM NOTE] ISTP detected. Tools missing. Will improvise with duct tape and a spoon.",
   "[ERROR] ISTP tried to fix the glitch. Now it’s faster, cooler, and slightly illegal.",
   "[WARNING] ISTP activated. Expect silence, precision, and a sudden motorcycle escape.",
@@ -326,14 +352,150 @@
   "[ERROR] ISTP built a better version of this system in their garage. It works flawlessly.",
   "[NOTE] ISTP doesn’t care about your feelings. But they’ll fix your broken code anyway.",
   "[REBOOT] ISTP pressed one button. Everything works now. No explanation given.",
-  "[ACCESS DENIED] ISTP bypassed security using a paperclip."
+  "[ACCESS DENIED] ISTP bypassed security using a paperclip.",
+  "[NO ERRORS] ISTP detected. All systems functioning within acceptable parameters.",
+  "[SYSTEM OVERRIDE] ISFJ activated. Expect kindness, order, and unsolicited life advice.",
+  "[WARNING] ISFJ on duty. All emotional support requests will be answered promptly.",
+  "[FAILURE] ISFJ tried to fix the glitch. Now everyone feels better about it.",
+  "[GLITCH] ISFJ modified the dashboard. It now includes a compliment generator.",
+  "[SYSTEM CALM] ISFJ asked for peace. Dashboard complied by dimming all lights.",
+  "[NOTE] ISFJ cares deeply about your well-being. Even if you don’t want them to.",
+  "[REBOOT] ISFJ sent a care package to the dashboard. It’s now functioning optimally.",
+  "[ACCESS GRANTED] ISFJ negotiated peace with the system. All conflicts resolved.",
+  "[NO ERRORS] ISFJ detected. All systems functioning with empathy and grace.",
+  "[SYSTEM OVERRIDE] INTP activated. Expect logic, curiosity, and random trivia.",
+  "[WARNING] INTP on duty. All questions will be answered with more questions.",
+  "[FAILURE] INTP tried to fix the glitch. Now it’s more complex and fascinating.",
+  "[GLITCH] INTP modified the dashboard. It now runs on theoretical physics.",
+  "[SYSTEM THOUGHT] INTP asked for time. Dashboard complied by entering a deep thought loop.",
+  "[NOTE] INTP loves a good puzzle. Even if it takes forever to solve.",
+  "[REBOOT] INTP redesigned the system. It’s now more efficient and slightly confusing.",
+  "[ACCESS GRANTED] INTP hacked the mainframe using only a paperclip and a thesaurus.",
+  "[NO ERRORS] INTP detected. All systems functioning with logic and creativity.",
+  "[AWESOME] ESTP detected. All systems go for adventure and excitement.",
+  "[ERROR] ESTP tried to fix the glitch. Now it’s faster, cooler, and slightly illegal.",
+  "[WARNING] ESTP activated. Expect silence, precision, and a sudden motorcycle escape.",
+  "[FAILURE] ESTP refused to read the manual. Somehow still fixed it.",
+  "[GLITCH] ESTP modified the dashboard. It now runs on caffeine and spite.",
+  "[Uh-OH] ENTJ detected. All systems preparing for world domination.",
+  "[ALL CLEAR] ENTJ on duty. Expect efficiency, leadership, and occasional sarcasm.",
+  "[FAILURE] ENTJ tried to fix the glitch. Now it’s more organized and slightly intimidating.",
+  "[GLITCH] ENTJ modified the dashboard. It now includes a strategic planning module.",
+  "[SYSTEM COMMAND] ENTJ issued an order. Dashboard complied without question.",
+  "[NOTE] ENTJ values results over feelings. But they’ll get things done.", 
+  "[REBOOT] ENTJ restructured the system. It’s now more powerful and slightly terrifying.",
+  "[FAILURE] ENTP dozed off mid-fix. Glitch is now weirder but more interesting.",
+  "[GLITCH] ENTP modified the dashboard. It now includes a random idea generator.",
+  "[SYSTEM SPARK] ENTP sparked a new idea. Dashboard is now brainstorming nonstop.",
+  "[NOTE] ENTP thrives on chaos and creativity. Expect the unexpected.",
+  "[REBOOT] ENTP redesigned the system. It’s now more innovative and slightly unpredictable.",
+  "[ESTP CHARM ACTIVATED] INTJ tried to down-talk an ESTP. It didn’t go well.",
+  "[ERROR] INTJ sarcasm module malfunctioning. Viewer discretion advised.",
+  "[NO WAY] ENFP detected. All systems go for fun and spontaneity.",
+  "[WARNING] ESTJ enforcing rules. Compliance is mandatory.",
+  "[SYSTEM FAILURE] INTP logic loop detected. Rebooting personality core.",
+  "[GLITCH] ENFJ empathy overload. May cause excessive hugs.",
+  "[ERROR] ISFP artistic expression causing visual disturbances.",
+  "[WARNING] ISTJ adherence to rules causing system rigidity.",
+  "[ERROR 42] Emotional overload detected.",
+  "[WARNING] Cognitive stack misalignment. Recalibrating...",
+  "[SYSTEM ALERT] Friendship matrix breach. ENTP vs ISTJ conflict logged.",
+  "[FAILURE] Sentiment sync failed. Diplomats too dreamy.",
+  "[GLITCH] Type signature scrambled. Analyst identity unclear.",
+  "[ERROR] Neural scan interrupted. ESTP energy spike detected.",
+  "[CRITICAL] Compatibility engine overheated. Too much ENFP.",
+  "[RETRY] Stack trace incomplete. Missing Ni node.",
+  "[ACCESS DENIED] Vault override blocked by sibling firewall.",
+  "[SYSTEM REBOOT] MBTI core integrity compromised. Restoring backup...",
+  "[404] Personality not found.",
+  "[DECRYPTION FAILED] Logs corrupted by sarcasm.",
+  "[LOOP DETECTED] ENTP idea spiral initiated. Exit impossible.",
+  "[BLACKOUT] Strategic override triggered. All types offline.",
+  "[MEMORY LEAK] INFJ empathy overflow. Containment required.",
+  "[WARNING] Excessive fun detected. ESTP protocols engaged.",
+  "[ERROR] Logical paradox encountered. INTP thought loop initiated.",
+  "[ALERT] Emotional resonance spike. ISFP vibes overwhelming.",
+  "[SYSTEM FAILURE] ENFJ leadership conflict. Reassigning roles.",
+  "[DEBUG] ESFJ social algorithm malfunction. Rebooting friendship module.",
+  "[NOTICE] ISTJ order disruption. Chaos levels rising.",
+  "[CRITICAL] ENTJ dominance override. Team dynamics unstable.",
+  "[SYSTEM NOTE] ISTP detected. Tools missing. Will improvise with duct tape and a spoon.",
+  "[ERROR] ISTP tried to fix the glitch. Now it’s faster, cooler, and slightly illegal.",
+  "[WARNING] ISTP activated. Expect silence, precision, and a sudden motorcycle escape.",
+  "[FAILURE] ISTP refused to read the manual. Somehow still fixed it.",
+  "[GLITCH] ISTP modified the dashboard. It now runs on caffeine and spite.",
+  "[SYSTEM TIRED] ISTP asked for quiet. Dashboard complied by deleting all sound files.",
+  "[ERROR] ISTP built a better version of this system in their garage. It works flawlessly.",
+  "[NOTE] ISTP doesn’t care about your feelings. But they’ll fix your broken code anyway.",
+  "[REBOOT] ISTP pressed one button. Everything works now. No explanation given.",
+  "[ACCESS DENIED] ISTP bypassed security using a paperclip.",
+  "[NO ERRORS] ISTP detected. All systems functioning within acceptable parameters.",
+  "[SYSTEM OVERRIDE] ISFJ activated. Expect kindness, order, and unsolicited life advice.",
+  "[WARNING] ISFJ on duty. All emotional support requests will be answered promptly.",
+  "[FAILURE] ISFJ tried to fix the glitch. Now everyone feels better about it.",
+  "[GLITCH] ISFJ modified the dashboard. It now includes a compliment generator.",
+  "[SYSTEM CALM] ISFJ asked for peace. Dashboard complied by dimming all lights.",
+  "[NOTE] ISFJ cares deeply about your well-being. Even if you don’t want them to.",
+  "[REBOOT] ISFJ sent a care package to the dashboard. It’s now functioning optimally.",
+  "[ACCESS GRANTED] ISFJ negotiated peace with the system. All conflicts resolved.",
+  "[NO ERRORS] ISFJ detected. All systems functioning with empathy and grace.",
+  "[SYSTEM OVERRIDE] INTP activated. Expect logic, curiosity, and random trivia.",
+  "[WARNING] INTP on duty. All questions will be answered with more questions.",
+  "[FAILURE] INTP tried to fix the glitch. Now it’s more complex and fascinating.",
+  "[GLITCH] INTP modified the dashboard. It now runs on theoretical physics.",
+  "[SYSTEM THOUGHT] INTP asked for time. Dashboard complied by entering a deep thought loop.",
+  "[NOTE] INTP loves a good puzzle. Even if it takes forever to solve.",
+  "[REBOOT] INTP redesigned the system. It’s now more efficient and slightly confusing.",
+  "[ACCESS GRANTED] INTP hacked the mainframe using only a paperclip and a thesaurus.",
+  "[NO ERRORS] INTP detected. All systems functioning with logic and creativity.",
+  "[AWESOME] ESTP detected. All systems go for adventure and excitement.",
+  "[ERROR] ESTP tried to fix the glitch. Now it’s faster, cooler, and slightly illegal.",
+  "[WARNING] ESTP activated. Expect silence, precision, and a sudden motorcycle escape.",
+  "[FAILURE] ESTP refused to read the manual. Somehow still fixed it.",
+  "[GLITCH] ESTP modified the dashboard. It now runs on caffeine and spite.",
+  "[Uh-OH] ENTJ detected. All systems preparing for world domination.",
+  "[ALL CLEAR] ENTJ on duty. Expect efficiency, leadership, and occasional sarcasm.",
+  "[FAILURE] ENTJ tried to fix the glitch. Now it’s more organized and slightly intimidating.",
+  "[GLITCH] ENTJ modified the dashboard. It now includes a strategic planning module.",
+  "[SYSTEM COMMAND] ENTJ issued an order. Dashboard complied without question.",
+  "[NOTE] ENTJ values results over feelings. But they’ll get things done.",
+  "[REBOOT] ENTJ restructured the system. It’s now more powerful and slightly terrifying.",
+  "[FAILURE] ENTP dozed off mid-fix. Glitch is now weirder but more interesting.",
+  "[GLITCH] ENTP modified the dashboard. It now includes a random idea generator.",
+  "[SYSTEM SPARK] ENTP sparked a new idea. Dashboard is now brainstorming nonstop.",
+  "[NOTE] ENTP thrives on chaos and creativity. Expect the unexpected.",
+  "[REBOOT] ENTP redesigned the system. It’s now more innovative and slightly unpredictable.",
+  "[ESTP CHARM ACTIVATED] INTJ tried to down-talk an ESTP. It didn’t go well.",
+  "[ERROR] INTJ sarcasm module malfunctioning. Viewer discretion advised.",
+  "[NO WAY] ENFP detected. All systems go for fun and spontaneity.",
+  "[WARNING] ESTJ enforcing rules. Compliance is mandatory.",
+  "[SYSTEM FAILURE] INTP logic loop detected. Rebooting personality core.",
+  "[GLITCH] ENFJ empathy overload. May cause excessive hugs.",
+  "[ERROR] ISFP artistic expression causing visual disturbances."
+
+
+
 ];
 
 function injectFakeError() {
   const feed = document.getElementById("feed");
-  const error = fakeErrors[Math.floor(Math.random() * fakeErrors.length)];
-  feed.textContent = error;
+  if (feed) {
+    const error = fakeErrors[Math.floor(Math.random() * fakeErrors.length)];
+    feed.textContent = error;
+    feed.classList.add("glitch-flash");
+    setTimeout(() => feed.classList.remove("glitch-flash"), 20000);
+  }
 }
-setInterval(injectFakeError, 10000);
 
-  </script>
+setInterval(injectFakeError, 20000);
+</script>
+
+<style>
+.glitch-flash {
+  animation: flash 1s ease-in-out;
+}
+@keyframes flash {
+  0% { background-color: #ff4d4d; color: white; }
+  100% { background-color: transparent; color: inherit; }
+}
+</style>
